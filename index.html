@@ -59,6 +59,7 @@
       margin-bottom: 40px;
     }
 
+    /* Número de tarjeta como texto normal, no botón */
     .card-number {
       font-size: 1.7rem;
       letter-spacing: 2px;
@@ -68,22 +69,16 @@
       border-radius: 14px;
       border: 2px solid #111111;
       margin-bottom: 25px;
-      user-select: all;
       font-weight: 700;
       box-shadow: 0 0 12px rgba(255,255,255,0.2);
-      transition: all 0.3s ease;
-      cursor: pointer;
 
-      /* Evitar que el número se vuelva azul en móviles o Safari */
+      /* Evitar que el número se vuelva azul o link en móviles */
       -webkit-touch-callout: none;
-      -webkit-user-select: all;
       -webkit-text-fill-color: #111111;
       text-decoration: none;
-    }
 
-    .card-number:hover {
-      box-shadow: 0 0 25px #fff, 0 0 40px #fff;
-      transform: translateY(-4px);
+      cursor: default; /* No se ve como botón */
+      user-select: all; /* Se puede seleccionar */
     }
 
     .btn-copy {
@@ -161,7 +156,7 @@
     <h1>Rentas ISSI</h1>
     <h2>Datos para Transferencia Bancaria</h2>
     
-    <div class="card-number" id="cardNumber" onclick="copyCard()">5101 2546 0906 4274</div>
+    <div class="card-number" id="cardNumber">5101 2546 0906 4274</div>
     
     <button class="btn-copy" onclick="copyCard()">Copiar número</button>
     
