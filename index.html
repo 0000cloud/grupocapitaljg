@@ -3,81 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rentas ISSI - Pago</title>
+  <title>Rentas ISSI - Datos de Transferencia</title>
+  <!-- Fuente moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* Reset y estilo base */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
 
     body {
-      background-color: #ffffff;
-      color: #111111;
+      background-color: #111111;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
+      color: #ffffff;
     }
 
     .container {
       text-align: center;
-      max-width: 400px;
+      max-width: 420px;
       width: 100%;
-      background: #f9f9f9;
-      padding: 40px 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      background: #1a1a1a;
+      padding: 50px 25px;
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.6);
+      transform: translateY(50px);
+      opacity: 0;
+      animation: fadeInUp 0.8s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     h1 {
-      font-size: 1.8rem;
-      margin-bottom: 30px;
-      font-weight: 600;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #cccccc;
+      margin-bottom: 40px;
     }
 
     .card-number {
-      font-size: 1.4rem;
+      font-size: 1.7rem;
       letter-spacing: 2px;
       background: #ffffff;
-      padding: 15px 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      margin-bottom: 20px;
+      color: #111111;
+      padding: 20px 15px;
+      border-radius: 14px;
+      border: 2px solid #111111;
+      margin-bottom: 25px;
       user-select: all;
+      font-weight: 700;
+      box-shadow: 0 0 12px rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card-number:hover {
+      box-shadow: 0 0 25px #fff, 0 0 40px #fff;
+      transform: translateY(-4px);
     }
 
     .btn-copy {
       display: inline-block;
-      padding: 12px 25px;
+      padding: 16px 35px;
       font-size: 1rem;
-      background-color: #111111;
-      color: #ffffff;
-      border: none;
-      border-radius: 8px;
+      background-color: #ffffff;
+      color: #111111;
+      border: 2px solid #111111;
+      border-radius: 14px;
       cursor: pointer;
-      transition: background 0.3s ease;
-      margin-bottom: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 0 8px rgba(255,255,255,0.2);
     }
 
     .btn-copy:hover {
-      background-color: #333333;
+      color: #ffffff;
+      background-color: #111111;
+      box-shadow: 0 0 20px #fff, 0 0 35px #fff;
+      border-color: #fff;
+      transform: translateY(-3px);
     }
 
-    .copied-msg {
-      font-size: 0.95rem;
-      color: #28a745;
-      margin-bottom: 20px;
+    .popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #28a745;
+      color: #fff;
+      padding: 15px 25px;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
       display: none;
+      z-index: 1000;
+      animation: popupFade 0.5s forwards;
+    }
+
+    @keyframes popupFade {
+      from { opacity: 0; transform: translate(-50%, -20px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
     }
 
     .info {
-      font-size: 0.95rem;
-      color: #111111;
-      line-height: 1.5;
+      font-size: 1rem;
+      color: #ffffff;
+      line-height: 1.6;
+      margin-top: 15px;
     }
 
     .info span {
@@ -86,10 +139,10 @@
 
     @media (max-width: 480px) {
       .container {
-        padding: 30px 15px;
+        padding: 35px 15px;
       }
       .card-number {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
       }
       .btn-copy {
         width: 100%;
@@ -99,28 +152,30 @@
 </head>
 <body>
   <div class="container">
-    <h1>Rentas ISSI - Pago</h1>
+    <h1>Rentas ISSI</h1>
+    <h2>Datos para Transferencia Bancaria</h2>
     
-    <div class="card-number" id="cardNumber">5101 2546 0906 4274</div>
+    <div class="card-number" id="cardNumber" onclick="copyCard()">5101 2546 0906 4274</div>
     
     <button class="btn-copy" onclick="copyCard()">Copiar número</button>
-    <div class="copied-msg" id="copiedMsg">Número copiado ✅ Pega en tu app bancaria</div>
     
     <div class="info">
-      <p><span>Banco:</span> nu</p>
-      <p><span>Nombre del titular:</span> jose gonzalez</p>
+      <p><span>Banco:</span> NU</p>
+      <p><span>Nombre del titular:</span> José Gonzalez</p>
     </div>
   </div>
+
+  <div class="popup" id="popupMsg">Número copiado ✅ Pega en tu app bancaria</div>
 
   <script>
     function copyCard() {
       const cardText = document.getElementById('cardNumber').innerText;
       navigator.clipboard.writeText(cardText).then(() => {
-        const msg = document.getElementById('copiedMsg');
-        msg.style.display = 'block';
+        const popup = document.getElementById('popupMsg');
+        popup.style.display = 'block';
         setTimeout(() => {
-          msg.style.display = 'none';
-        }, 3000);
+          popup.style.display = 'none';
+        }, 2500);
       }).catch(err => {
         alert('No se pudo copiar el número. Intenta manualmente.');
       });
@@ -128,4 +183,5 @@
   </script>
 </body>
 </html>
+
  
